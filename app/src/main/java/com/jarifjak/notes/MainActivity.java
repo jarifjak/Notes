@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.jarifjak.notes.adapter.NoteAdapter;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,14 +44,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.MyLis
 
         noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
 
-        noteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
-
-            @Override
-            public void onChanged(List<Note> notes) {
-
-                adapter.setNotes(notes);
-            }
-        });
+        noteViewModel.getAllNotes().observe(this, notes -> adapter.submitList(notes));
     }
 
     private void initializeRecyclerView() {
@@ -94,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.MyLis
 
         if (requestCode == Constants.REQUEST_CODE_ADDNOTE && resultCode == RESULT_OK) {
 
-            String title = data.getStringExtra(Constants.ADDNOTE_TITLE);
+            String title = Objects.requireNonNull(data).getStringExtra(Constants.ADDNOTE_TITLE);
             String description = data.getStringExtra(Constants.ADDNOTE_DESCRIPTION);
             int priority = data.getIntExtra(Constants.ADDNOTE_PRIORITY, 1);
 
@@ -104,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements NoteAdapter.MyLis
 
         } else if (requestCode == Constants.REQUEST_CODE_EDITNOTE && resultCode == RESULT_OK) {
 
-            int id = data.getIntExtra(Constants.ADDNOTE_ID, -1);
+            int id = Objects.requireNonNull(data).getIntExtra(Constants.ADDNOTE_ID, -1);
 
             if (id == -1) {
 
