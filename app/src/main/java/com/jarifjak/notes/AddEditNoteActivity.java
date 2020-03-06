@@ -17,7 +17,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AddNoteActivity extends AppCompatActivity {
+public class AddEditNoteActivity extends AppCompatActivity {
 
     @BindView(R.id.titleTV)
     AppCompatEditText titleTV;
@@ -33,7 +33,22 @@ public class AddNoteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_note);
         ButterKnife.bind(this);
 
-        setTitle("Add Note");
+        Intent intent = getIntent();
+
+        if (intent.hasExtra(Constants.ADDNOTE_ID)) {
+
+            setTitle("Edit Note");
+
+            titleTV.setText(intent.getStringExtra(Constants.ADDNOTE_TITLE));
+            descriptionTV.setText(intent.getStringExtra(Constants.ADDNOTE_DESCRIPTION));
+            priorityNP.setValue(intent.getIntExtra(Constants.ADDNOTE_PRIORITY, 1));
+
+        } else {
+
+            setTitle("Add Note");
+
+        }
+
         Objects.requireNonNull(getSupportActionBar()).setHomeAsUpIndicator(R.drawable.ic_close);
 
         priorityNP.setMinValue(1);
@@ -57,7 +72,14 @@ public class AddNoteActivity extends AppCompatActivity {
 
         data.putExtra(Constants.ADDNOTE_TITLE, title);
         data.putExtra(Constants.ADDNOTE_DESCRIPTION, description);
-        data.putExtra(Constants.ADDNOTE_PRIORITY, 1);
+        data.putExtra(Constants.ADDNOTE_PRIORITY, priority);
+
+        int id = getIntent().getIntExtra(Constants.ADDNOTE_ID, -1);
+
+        if (id != -1) {
+
+            data.putExtra(Constants.ADDNOTE_ID, id);
+        }
 
         setResult(RESULT_OK, data);
         finish();

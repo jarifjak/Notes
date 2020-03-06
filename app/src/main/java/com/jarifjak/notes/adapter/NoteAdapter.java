@@ -16,10 +16,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     private List<Note> notes = new ArrayList<>();
+    private MyListener listener;
 
     public NoteAdapter() {
     }
@@ -73,5 +75,22 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        @OnClick(R.id.note_root)
+        public void onViewClicked() {
+
+            listener.onNoteClick(notes.get(getAdapterPosition()));
+        }
     }
+
+
+    public interface MyListener {
+        void onNoteClick(Note note);
+    }
+
+    public void setOnNoteClickListener(MyListener listener) {
+
+        this.listener = listener;
+    }
+
 }

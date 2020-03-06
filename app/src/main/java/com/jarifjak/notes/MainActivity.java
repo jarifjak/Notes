@@ -24,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NoteAdapter.MyListener {
 
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         adapter = new NoteAdapter();
+        adapter.setOnNoteClickListener(this);
         recyclerView.setAdapter(adapter);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
     @OnClick(R.id.addFloatingButton)
     public void onViewClicked() {
 
-        Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+        Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
         startActivityForResult(intent, Constants.REQUEST_CODE_ADDNOTE);
     }
 
@@ -100,6 +101,26 @@ public class MainActivity extends AppCompatActivity {
             noteViewModel.insert(new Note(title, description, priority));
 
             Toast.makeText(MainActivity.this, "Note Saved!", Toast.LENGTH_SHORT).show();
+
+        } else if (requestCode == Constants.REQUEST_CODE_EDITNOTE && resultCode == RESULT_OK) {
+
+            int id = data.getIntExtra(Constants.ADDNOTE_ID, -1);
+
+            if (id == -1) {
+
+                Toast.makeText(MainActivity.this, "Note can not be updated!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String title = data.getStringExtra(Constants.ADDNOTE_TITLE);
+            String description = data.getStringExtra(Constants.ADDNOTE_DESCRIPTION);
+            int priority = data.getIntExtra(Constants.ADDNOTE_PRIORITY, 1);
+
+            Note note = new Note(title, description, priority);
+            note.setId(id);
+
+            noteViewModel.update(note);
+            Toast.makeText(MainActivity.this, "Note Updated!", Toast.LENGTH_SHORT).show();
 
         } else {
 
@@ -129,5 +150,18 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onNoteClick(Note note) {
+
+        Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
+
+        intent.putExtra(Constants.ADDNOTE_ID, note.getId());                            //id is both used as flag and also to update in db we need id of that object
+        intent.putExtra(Constants.ADDNOTE_TITLE, note.getTitle());
+        intent.putExtra(Constants.ADDNOTE_DESCRIPTION, note.getDescription());
+        intent.putExtra(Constants.ADDNOTE_PRIORITY, note.getPriority());
+
+        startActivityForResult(intent, Constants.REQUEST_CODE_EDITNOTE);
     }
 }
