@@ -19,7 +19,7 @@ public abstract class NoteDatabase extends RoomDatabase {
 
     public abstract NoteDao noteDao();
 
-    public static synchronized NoteDatabase getInstance(Context context) {
+    public static NoteDatabase getInstance(Context context) {
 
         if (instance == null) {
 
