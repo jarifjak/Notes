@@ -1,4 +1,4 @@
-package com.jarifjak.notes;
+package com.jarifjak.notes.util;
 
 public interface Constants {
 

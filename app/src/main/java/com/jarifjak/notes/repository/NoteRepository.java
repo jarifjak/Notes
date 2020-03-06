@@ -1,9 +1,13 @@
-package com.jarifjak.notes;
+package com.jarifjak.notes.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
+
+import com.jarifjak.notes.database.NoteDao;
+import com.jarifjak.notes.database.NoteDatabase;
+import com.jarifjak.notes.model.Note;
 
 import java.util.List;
 

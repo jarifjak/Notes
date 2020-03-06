@@ -1,4 +1,4 @@
-package com.jarifjak.notes;
+package com.jarifjak.notes.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,15 +10,17 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.jarifjak.notes.util.Constants;
+import com.jarifjak.notes.viewmodel.NoteViewModel;
+import com.jarifjak.notes.R;
 import com.jarifjak.notes.adapter.NoteAdapter;
+import com.jarifjak.notes.model.Note;
 
-import java.util.List;
 import java.util.Objects;
 
 import butterknife.BindView;

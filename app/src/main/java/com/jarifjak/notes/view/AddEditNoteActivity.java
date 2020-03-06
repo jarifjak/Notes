@@ -1,4 +1,4 @@
-package com.jarifjak.notes;
+package com.jarifjak.notes.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatEditText;
+
+import com.jarifjak.notes.util.Constants;
+import com.jarifjak.notes.R;
 
 import java.util.Objects;
 
@@ -58,8 +61,8 @@ public class AddEditNoteActivity extends AppCompatActivity {
 
     private void saveNote() {
 
-        String title = titleTV.getText().toString();
-        String description = descriptionTV.getText().toString();
+        String title = Objects.requireNonNull(titleTV.getText()).toString();
+        String description = Objects.requireNonNull(descriptionTV.getText()).toString();
         int priority = priorityNP.getValue();
 
         if (title.trim().isEmpty() || description.trim().isEmpty()) {

@@ -1,4 +1,4 @@
-package com.jarifjak.notes;
+package com.jarifjak.notes.database;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,6 +8,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
+
+import com.jarifjak.notes.model.Note;
 
 
 @Database(entities = {Note.class}, version = 1)

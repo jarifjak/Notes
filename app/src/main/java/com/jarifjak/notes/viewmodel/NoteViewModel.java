@@ -1,10 +1,13 @@
-package com.jarifjak.notes;
+package com.jarifjak.notes.viewmodel;
 
 import android.app.Application;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
+
+import com.jarifjak.notes.repository.NoteRepository;
+import com.jarifjak.notes.model.Note;
 
 import java.util.List;
 

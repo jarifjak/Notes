@@ -1,4 +1,4 @@
-package com.jarifjak.notes;
+package com.jarifjak.notes.model;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
